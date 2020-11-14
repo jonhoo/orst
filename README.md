@@ -1,4 +1,4 @@
-Implementation of various sorting algorithms in Rust.
+Implementation of various [sorting algorithms] in Rust.
 
 To benchmark and plot (you'll need [R] and [ggplot2]):
 
@@ -13,5 +13,6 @@ ggplot(t, aes(n, comparisons, colour = algorithm)) + geom_point() + scale_y_log1
 ggplot(t, aes(n, time, colour = algorithm)) + geom_point() + scale_y_log10()
 ```
 
+[sorting algorithms]: https://en.wikipedia.org/wiki/Sorting_algorithm
 [R]: https://www.r-project.org/
 [ggplot2]: https://ggplot2.tidyverse.org/
