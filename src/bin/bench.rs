@@ -59,8 +59,6 @@ fn main() {
             println!("{} {} {} {}", "selection", n, took.0, took.1);
             let took = bench(QuickSort, &values, &counter);
             println!("{} {} {} {}", "quick", n, took.0, took.1);
-            let took = bench(QuickSort, &values, &counter);
-            println!("{} {} {} {}", "quick", n, took.0, took.1);
             let took = bench(StdSorter, &values, &counter);
             println!("{} {} {} {}", "std", n, took.0, took.1);
         }
