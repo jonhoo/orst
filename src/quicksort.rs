@@ -54,8 +54,8 @@ fn quicksort<T: Ord>(slice: &mut [T]) {
     quicksort(&mut right[1..]);
 }
 
-impl Sorter for QuickSort {
-    fn sort<T>(&self, slice: &mut [T])
+impl<T> Sorter<T> for QuickSort {
+    fn sort(&self, slice: &mut [T])
     where
         T: Ord,
     {

@@ -2,8 +2,8 @@ use super::Sorter;
 
 pub struct BubbleSort;
 
-impl Sorter for BubbleSort {
-    fn sort<T>(&self, slice: &mut [T])
+impl<T> Sorter<T> for BubbleSort {
+    fn sort(&self, slice: &mut [T])
     where
         T: Ord,
     {

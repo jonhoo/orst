@@ -2,8 +2,8 @@ use super::Sorter;
 
 pub struct SelectionSort;
 
-impl Sorter for SelectionSort {
-    fn sort<T>(&self, slice: &mut [T])
+impl<T> Sorter<T> for SelectionSort {
+    fn sort(&self, slice: &mut [T])
     where
         T: Ord,
     {
