@@ -3,14 +3,21 @@ pub trait Sorter {
     where
         T: Ord;
 }
+pub trait CloneSorter {
+    fn clone_sort<T>(&self, slice: &mut [T])
+    where
+        T: Ord+Clone;
+}
 
 mod bubblesort;
 mod insertionsort;
+mod mergesort;
 mod quicksort;
 mod selectionsort;
 
 pub use bubblesort::BubbleSort;
 pub use insertionsort::InsertionSort;
+pub use mergesort::MergeSort;
 pub use quicksort::QuickSort;
 pub use selectionsort::SelectionSort;
 
