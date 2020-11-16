@@ -4,8 +4,8 @@ pub struct InsertionSort {
     pub smart: bool,
 }
 
-impl Sorter for InsertionSort {
-    fn sort<T>(&self, slice: &mut [T])
+impl<T> Sorter<T> for InsertionSort {
+    fn sort(&self, slice: &mut [T])
     where
         T: Ord,
     {

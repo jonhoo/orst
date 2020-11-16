@@ -1,5 +1,5 @@
-pub trait Sorter {
-    fn sort<T>(&self, slice: &mut [T])
+pub trait Sorter<T>{
+    fn sort(&self, slice: &mut [T])
     where
         T: Ord;
 }
@@ -15,8 +15,8 @@ pub use quicksort::QuickSort;
 pub use selectionsort::SelectionSort;
 
 pub struct StdSorter;
-impl Sorter for StdSorter {
-    fn sort<T>(&self, slice: &mut [T])
+impl<T> Sorter<T> for StdSorter {
+    fn sort(&self, slice: &mut [T])
     where
         T: Ord,
     {
