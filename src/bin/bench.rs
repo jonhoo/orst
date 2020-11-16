@@ -65,9 +65,9 @@ fn main() {
     }
 }
 
-fn bench<T: Ord + Clone, S: Sorter>(
+fn bench<T: Ord + Clone, S: Sorter<T>>(
     sorter: S,
-    values: &[SortEvaluator<T>],
+    values: &[T],
     counter: &Cell<usize>,
 ) -> (usize, f64) {
     let mut values: Vec<_> = values.to_vec();
