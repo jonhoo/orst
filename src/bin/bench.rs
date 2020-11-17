@@ -2,12 +2,8 @@ use orst::*;
 
 use rand::prelude::*;
 use std::cell::Cell;
-use std::cmp::{max, Ordering};
+use std::cmp::Ordering;
 use std::rc::Rc;
-
-//only the first digit of MIN_ELEMENT and MAX_ELEMENT is considered
-const MIN_ELEMENT: usize = 0;
-const MAX_ELEMENT: u32 = 6000;
 
 #[derive(Clone)]
 struct SortEvaluator<T> {
@@ -39,26 +35,9 @@ impl<T: Ord> Ord for SortEvaluator<T> {
 fn main() {
     let mut rand = rand::thread_rng();
     let counter = Rc::new(Cell::new(0));
-    assert!(
-        MAX_ELEMENT >= (MIN_ELEMENT + 10_usize.pow((MIN_ELEMENT as f64).log10() as u32)) as u32,
-        "MAX_ELEMENT should be greater than (MIN_ELEMENT + 10^log10(MIN_ELEMENT))"
-    );
-    let digits_max: u32 = (MAX_ELEMENT as f64).log10() as u32;
-    let digits_min: u32 = max(0, (MIN_ELEMENT as f64).log10() as u32);
-    let n_max: usize = (digits_max * 9 + MAX_ELEMENT / (10_u32.pow(digits_max))) as usize;
-    let n_min: usize = (digits_min * 9 + MIN_ELEMENT as u32 / (10_u32.pow(digits_min))) as usize;
-    let index = n_max - n_min + 1;
-    let mut items = Vec::with_capacity(index);
-    let rounded_min_element = (n_min - digits_min as usize * 9) * (10_u32.pow(digits_min)) as usize;
-    items.push(rounded_min_element);
-    for _ in 1..index {
-        let items_clone = items.clone();
-        let la = items_clone.last().unwrap();
-        items.push(la + 10_i32.pow((*la as f64).log10() as u32) as usize);
-    }
 
     println!("algorithm n comparisons time");
-    for &n in &items {
+    for &n in &[0, 1, 10, 100, 1000, 10000] {
         let mut values = Vec::with_capacity(n);
         for _ in 0..n {
             values.push(SortEvaluator {

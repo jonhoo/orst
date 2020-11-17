@@ -25,8 +25,8 @@ impl<T> Sorter<T> for StdSorter {
 }
 
 pub struct StdUnstableSorter;
-impl Sorter for StdUnstableSorter {
-    fn sort<T>(&self, slice: &mut [T])
+impl<T> Sorter<T> for StdUnstableSorter {
+    fn sort(&self, slice: &mut [T])
     where
         T: Ord,
     {
