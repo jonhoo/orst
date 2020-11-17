@@ -1,3 +1,11 @@
+/*!
+An implementation of American Flag sort (https://en.wikipedia.org/wiki/American_flag_sort), in particular inspired by M. Skarupke's 2017 C++Now talk "Sorting in less than O(n log n): Generalizing and optimizing radix sort" (https://www.youtube.com/watch?v=zqs87a_7zxw).
+
+It sorts the slice into 256 buckets (stripes) according to the most significant byte. Then it recursively sorts each bucket with more than one element in it until there are no more bytes to sort by.
+
+Currently only works on `&[T: Sized]`, as it uses `std::mem::size_of::<T>()` to decide that it is done with the recursion. In order to be able to sort `&[T: ?Sized]`, it must be rewritten to accomodate the fact that some `T` are longer than others.
+*/
+
 use super::Sorter;
 
 #[cfg(test)]
@@ -7,8 +15,21 @@ use rand::thread_rng;
 
 pub struct RadixSort;
 
+/// Implementing this trait means that an object can be turned into a collection of `u8` keys of decreasing
+/// significance, to accomodate the radix sort.
 pub trait Bytify
 {
+    /// Returns the `(n+1)`th most significant byte of `self`, recast to `usize` because it is
+    /// exclusively used as an index into arrays. A return of `None` means that `n` goes beyond all
+    /// the bytes that `self` can signify.
+    ///
+    /// # Example
+    /// ```
+    /// use orst::Bytify;
+    /// let x: u8 = 5;
+    /// assert_eq!(x.bytify(0), Some(5 as usize));
+    /// assert_eq!(x.bytify(1), None);
+    /// ```
     fn bytify(&self, n: usize) -> Option<usize>;
 }
 
