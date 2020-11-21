@@ -32,12 +32,22 @@ impl<T: Ord> Ord for SortEvaluator<T> {
     }
 }
 
+impl<T> Bytify for SortEvaluator<T>
+    where
+        T: Bytify
+{
+    fn bytify(&self, level: usize) -> Option<usize>
+    {
+        return self.t.bytify(level);
+    }
+}
+
 fn main() {
     let mut rand = rand::thread_rng();
     let counter = Rc::new(Cell::new(0));
 
     println!("algorithm n comparisons time");
-    for &n in &[0, 1, 10, 100, 1000, 10000] {
+    for &n in &[0, 1, 10, 100, 1000, 10000, 50000] {
         let mut values = Vec::with_capacity(n);
         for _ in 0..n {
             values.push(SortEvaluator {
@@ -59,6 +69,8 @@ fn main() {
             println!("{} {} {} {}", "selection", n, took.0, took.1);
             let took = bench(QuickSort, &values, &counter);
             println!("{} {} {} {}", "quick", n, took.0, took.1);
+            let took = bench(RadixSort, &values, &counter);
+            println!("{} {} {} {}", "radix", n, took.0, took.1);
             let took = bench(StdSorter, &values, &counter);
             println!("{} {} {} {}", "stdstable", n, took.0, took.1);
             let took = bench(StdUnstableSorter, &values, &counter);
@@ -67,9 +79,9 @@ fn main() {
     }
 }
 
-fn bench<T: Ord + Clone, S: Sorter<T>>(
+fn bench<T: Ord + Clone, S: Sorter<SortEvaluator<T>>>(
     sorter: S,
-    values: &[T],
+    values: &[SortEvaluator<T>],
     counter: &Cell<usize>,
 ) -> (usize, f64) {
     let mut values: Vec<_> = values.to_vec();

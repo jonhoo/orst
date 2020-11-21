@@ -8,11 +8,14 @@ mod bubblesort;
 mod insertionsort;
 mod quicksort;
 mod selectionsort;
+mod radixsort;
 
 pub use bubblesort::BubbleSort;
 pub use insertionsort::InsertionSort;
 pub use quicksort::QuickSort;
 pub use selectionsort::SelectionSort;
+pub use radixsort::RadixSort;
+pub use radixsort::Bytify;
 
 pub struct StdSorter;
 impl<T> Sorter<T> for StdSorter {
