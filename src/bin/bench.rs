@@ -60,7 +60,9 @@ fn main() {
             let took = bench(QuickSort, &values, &counter);
             println!("{} {} {} {}", "quick", n, took.0, took.1);
             let took = bench(StdSorter, &values, &counter);
-            println!("{} {} {} {}", "std", n, took.0, took.1);
+            println!("{} {} {} {}", "stdstable", n, took.0, took.1);
+            let took = bench(StdUnstableSorter, &values, &counter);
+            println!("{} {} {} {}", "stdunstable", n, took.0, took.1);
         }
     }
 }

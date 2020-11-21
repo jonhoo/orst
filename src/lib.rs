@@ -24,6 +24,16 @@ impl<T> Sorter<T> for StdSorter {
     }
 }
 
+pub struct StdUnstableSorter;
+impl<T> Sorter<T> for StdUnstableSorter {
+    fn sort(&self, slice: &mut [T])
+    where
+        T: Ord,
+    {
+        slice.sort_unstable();
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -32,6 +42,13 @@ mod tests {
     fn std_works() {
         let mut things = vec![4, 2, 3, 1];
         StdSorter.sort(&mut things);
+        assert_eq!(things, &[1, 2, 3, 4]);
+    }
+
+    #[test]
+    fn stdunstable_works() {
+        let mut things = vec![4, 2, 3, 1];
+        StdUnstableSorter.sort(&mut things);
         assert_eq!(things, &[1, 2, 3, 4]);
     }
 }
