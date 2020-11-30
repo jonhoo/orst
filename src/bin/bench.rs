@@ -71,6 +71,8 @@ fn main() {
             println!("{} {} {} {}", "quick", n, took.0, took.1);
             let took = bench(RadixSort, &values, &counter);
             println!("{} {} {} {}", "radix", n, took.0, took.1);
+            let took = bench(HeapSort, &values, &counter);
+            println!("{} {} {} {}", "heap", n, took.0, took.1);
             let took = bench(StdSorter, &values, &counter);
             println!("{} {} {} {}", "stdstable", n, took.0, took.1);
             let took = bench(StdUnstableSorter, &values, &counter);
