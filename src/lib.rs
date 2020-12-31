@@ -10,6 +10,7 @@ mod quicksort;
 mod selectionsort;
 mod radixsort;
 mod heapsort;
+mod mergesort;
 
 pub use bubblesort::BubbleSort;
 pub use insertionsort::InsertionSort;
@@ -18,6 +19,7 @@ pub use selectionsort::SelectionSort;
 pub use radixsort::RadixSort;
 pub use radixsort::Bytify;
 pub use heapsort::HeapSort;
+pub use mergesort::MergeSort;
 
 pub struct StdSorter;
 impl<T> Sorter<T> for StdSorter {

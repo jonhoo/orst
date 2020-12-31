@@ -77,6 +77,8 @@ fn main() {
             println!("{} {} {} {}", "stdstable", n, took.0, took.1);
             let took = bench(StdUnstableSorter, &values, &counter);
             println!("{} {} {} {}", "stdunstable", n, took.0, took.1);
+            let took = bench(MergeSort, &values, &counter);
+            println!("{} {} {} {}", "merge", n, took.0, took.1);
         }
     }
 }
