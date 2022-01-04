@@ -17,41 +17,32 @@ fn quicksort<T: Ord>(slice: &mut [T]) {
     let (pivot, rest) = slice.split_first_mut().expect("slice is non-empty");
     let mut left = 0;
     let mut right = rest.len() - 1;
-    while left <= right {
+    // if right <= 0, it's done
+    while left <= right && right > 0 {
         if &rest[left] <= pivot {
             // already on the correct side
             left += 1;
-        } else if &rest[right] > pivot {
+        } else if &rest[right] > pivot && right > 0 {
             // right already on the correct side
             // avoid unnecessary swaps back and forth
-            if right == 0 {
-                // we must be done
-                break;
-            }
             right -= 1;
         } else {
             // left holds a right, and right holds a left, swap them.
             rest.swap(left, right);
             left += 1;
-            if right == 0 {
-                // we must be done
-                break;
-            }
             right -= 1;
         }
     }
 
-    // re-align left to account for the pivot at 0
-    let left = left + 1;
-
     // place the pivot at its final location
-    slice.swap(0, left - 1);
+    slice.swap(0, left);
 
-    // split_at_mut(mid: usize) -> (&mut [..mid), &mut [mid..])
-    let (left, right) = slice.split_at_mut(left - 1);
-    assert!(left.last() <= right.first());
-    quicksort(left);
-    quicksort(&mut right[1..]);
+    // left is the pivot index
+    // less_pivot = [0, left)     greater_pivot = (left, slice.len() - 1]
+    let (less_pivot, greater_pivot) = slice.split_at_mut(left);
+    assert!(less_pivot.last() <= greater_pivot.first());
+    quicksort(less_pivot);
+    quicksort(&mut greater_pivot[1..]);
 }
 
 impl<T> Sorter<T> for QuickSort {
